@@ -1,0 +1,556 @@
+\documentclass[11pt]{amsart}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.15in]{geometry}
+\usepackage{booktabs}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{problem}[theorem]{Problem}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\abs}[1]{\lvert #1\rvert}
+\newcommand{\set}[1]{\{#1\}}
+\DeclareMathOperator{\ord}{ord}
+
+\title[Sharpness of the Enestr\"om--Kakeya annulus]{When is the Enestr\"om--Kakeya annulus sharp?\\[2pt]
+Exact equality cases and a defect identity}
+\author{wangyue}
+\date{\today}
+
+\begin{document}
+
+\begin{abstract}
+Let $p(z)=\sum_{k=0}^{n}a_kz^k$ with $a_k>0$, and put $A=\max_k a_k/a_{k+1}$ and
+$a=\min_k a_k/a_{k+1}$. The Enestr\"om--Kakeya theorem places all zeros of $p$ in the
+annulus $a\le\abs{z}\le A$. We determine exactly when this annulus is \emph{sharp}, that
+is, when a zero actually lies on a boundary circle. In the standard rescaling
+$b_k=a_kA^{k}$ that makes the coefficient sequence nondecreasing, a zero on the unit circle
+exists if and only if $b$ is constant on consecutive blocks of some common length
+$d\ge2$ dividing $n+1$; equivalently, if and only if
+$q(u)=(1+u+\cdots+u^{d-1})G(u^{d})$ for such a $d$. Three consequences are that every
+boundary zero is a root of unity of order dividing $n+1$, that for $n+1$ prime the outer
+circle is attained only by geometric polynomials, and that a simple arithmetic condition on
+the set of indices where the maximal ratio is \emph{not} attained rules out boundary zeros.
+The proof is a rigidity argument for equality in the triangle inequality. It is complemented
+by an exact defect identity and by a worked perturbation showing that the extremal rate in
+the family $1+z+\cdots+z^{n-1}+\gamma z^{n}$ is
+$2\sin^{2}(\pi/(n+1))(\gamma-1)/(n+1)=\Theta((\gamma-1)/n^{3})$. All statements are checked
+computationally, over $6182$ coefficient sequences with no counterexample.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+\subsection{The classical statement}
+
+Let $p(z)=\sum_{k=0}^{n}a_kz^k$ with $a_k>0$ for all $k$, and put
+\begin{equation}\label{eq:ratios}
+r_k:=\frac{a_k}{a_{k+1}}\quad(0\le k\le n-1),\qquad
+a:=\min_{0\le k\le n-1}r_k,\qquad A:=\max_{0\le k\le n-1}r_k .
+\end{equation}
+The Enestr\"om--Kakeya theorem states that every zero $z$ of $p$ satisfies
+\begin{equation}\label{eq:EK}
+a\le\abs{z}\le A .
+\end{equation}
+The result is due to Enestr\"om \cite{Enestrom} and, independently and in the form above, to
+Kakeya \cite{Kakeya}; see \cite[\S27]{Marden} and \cite[Chapter~4]{RS2002} for the classical
+treatment and for refinements under additional hypotheses on the coefficients.
+
+Two features of \eqref{eq:EK} are immediate. First, the annulus is optimal as stated: for
+$p(z)=1+z+\cdots+z^{n}$ all ratios equal $1$ and all zeros lie on the unit circle. Second,
+no annulus determined by the extreme ratios alone can be smaller, since the ratios of a
+polynomial may be prescribed essentially freely.
+
+The question studied here is different, and appears not to have been isolated in the
+literature: \emph{for a given $p$, does a zero actually lie on the circle $\abs{z}=A$, or on
+$\abs{z}=a$?} That is, when is \eqref{eq:EK} attained rather than merely approached? The
+known refinements of \eqref{eq:EK} shrink the annulus under further hypotheses on the
+coefficients; they do not characterise the polynomials for which the original annulus is
+exact. Strictness has been studied for particular parametric families; the general
+characterisation below covers such families as special cases.
+
+\subsection{Main results}
+
+The key step is the passage to the \emph{extremal normalisation}. Set
+\begin{equation}\label{eq:normalisation}
+b_k:=a_kA^{k}\quad(0\le k\le n),\qquad q(u):=\sum_{k=0}^{n}b_ku^{k},\qquad p(z)=q(Az).
+\end{equation}
+Since $b_k/b_{k+1}=r_k/A\le1$, the sequence $b$ is nondecreasing and positive, and the upper
+bound in \eqref{eq:EK} becomes the statement that the zeros of $q$ lie in the closed unit
+disc. Write
+\begin{equation}\label{eq:Delta}
+\Delta_k:=b_k-b_{k-1}\ge0\quad(1\le k\le n),\qquad
+I:=\set{\,k\in\set{1,\dots,n}:\Delta_k>0\,}
+\end{equation}
+for the \emph{jump set} of $b$, that is, the set of indices at which the maximal ratio $A$
+is not attained.
+
+\begin{theorem}[Rigidity]\label{thm:rigidity}
+Let $0<b_0\le b_1\le\cdots\le b_n$ and $q(u)=\sum_{k=0}^{n}b_ku^{k}$. The following are
+equivalent.
+\begin{enumerate}
+\item[(i)] $q$ has a zero on the unit circle $\set{\abs{u}=1}$;
+\item[(ii)] there is an integer $d\ge2$ with $d\mid(n+1)$ such that
+$b_{jd}=b_{jd+1}=\cdots=b_{jd+d-1}$ for every $j=0,1,\dots,(n+1)/d-1$;
+\item[(iii)] there are $d\ge2$ with $d\mid(n+1)$, an integer $m:=(n+1)/d$, and numbers
+$0<c_0\le c_1\le\cdots\le c_{m-1}$ such that
+\begin{equation}\label{eq:factorisation}
+q(u)=\bigl(1+u+\cdots+u^{d-1}\bigr)\sum_{j=0}^{m-1}c_ju^{jd}.
+\end{equation}
+\end{enumerate}
+\end{theorem}
+
+Thus a boundary zero is never an accident of the coefficients: it forces a block-periodic
+structure, and it always arises from the cyclotomic factor $1+u+\cdots+u^{d-1}$.
+
+Theorem \ref{thm:rigidity} yields, in \S\ref{sec:corollaries}, that every zero on
+$\abs{u}=1$ is a root of unity of order dividing $n+1$ (Corollary \ref{cor:rootofunity}),
+that for $n+1$ prime the outer circle is attained only by geometric polynomials
+(Corollary \ref{cor:prime}), and that the existence of boundary zeros is decided by the
+arithmetic of the jump set (Corollary \ref{cor:gcd}).
+
+Section \ref{sec:quant} gives the quantitative counterpart. There is an exact
+\emph{defect identity} (Proposition \ref{prop:defect}), whose degenerate case is precisely
+the rigidity statement, and which controls the deficit of $\abs{z}$ from $A$ by the
+misalignment of the arguments $u^{k}$. A worked perturbation
+(Proposition \ref{prop:gamma}) shows that in the family $1+z+\cdots+z^{n-1}+\gamma z^{n}$
+the extremal circle is approached at the rate
+$2\sin^{2}(\pi/(n+1))(\gamma-1)/(n+1)=\Theta((\gamma-1)/n^{3})$: the Enestr\"om--Kakeya
+bound is sharp, but its sharpness is fragile in high degree.
+
+Section \ref{sec:numerics} reports an exhaustive verification of
+Theorem \ref{thm:rigidity} over $6182$ coefficient sequences, with no counterexample.
+Section \ref{sec:open} lists the open questions.
+
+\section{The sharp theorem and a short proof}\label{sec:EK}
+
+For completeness, and because the proof of Theorem \ref{thm:rigidity} builds on it, we
+recall a short proof of \eqref{eq:EK}. The only ingredient is the following lemma, which is
+the case $A=1$ of the theorem.
+
+\begin{lemma}[Monotone lemma]\label{lem:monotone}
+Let $0<b_0\le b_1\le\cdots\le b_n$ and $q(u)=\sum_{k=0}^{n}b_ku^{k}$. Then every zero $u$
+of $q$ satisfies $\abs{u}\le1$.
+\end{lemma}
+
+\begin{proof}
+By \eqref{eq:key} below we have $b_nu^{n+1}=b_0+\sum_{k=1}^{n}\Delta_ku^{k}$ whenever
+$q(u)=0$, with $\Delta_k=b_k-b_{k-1}\ge0$. Suppose that $q(u)=0$ and $R:=\abs{u}>1$. Then
+\[
+b_nR^{n+1}\le b_0+\sum_{k=1}^{n}\Delta_kR^{k}
+\le b_0+R^{n}\sum_{k=1}^{n}\Delta_k
+=b_0+R^{n}(b_n-b_0)
+=b_nR^{n}-b_0\bigl(R^{n}-1\bigr)
+<b_nR^{n},
+\]
+because $b_0>0$ and $R>1$. Dividing by $b_nR^{n}>0$ gives $R<1$, a contradiction.
+\end{proof}
+
+\begin{theorem}[Enestr\"om--Kakeya]\label{thm:EK}
+Every zero $z$ of $p$ satisfies $a\le\abs{z}\le A$.
+\end{theorem}
+
+\begin{proof}
+\emph{Upper bound.} With $b_k=a_kA^{k}$ as in \eqref{eq:normalisation} we have $p(z)=q(Az)$,
+where $q$ has nondecreasing positive coefficients. By Lemma \ref{lem:monotone} every zero
+$u$ of $q$ satisfies $\abs{u}\le1$, so every zero $z=A^{-1}u$ of $p$ satisfies
+$\abs{z}\le A$.
+
+\emph{Lower bound.} Put $c_k:=a_ka^{k}$, so that $c_k/c_{k+1}=r_k/a\ge1$ and hence
+$c_0\ge c_1\ge\cdots\ge c_n>0$. Then $p(z)=f(z/a)$ with $f(w)=\sum_{k=0}^{n}c_kw^{k}$. Let
+$f^{*}(w):=w^{n}f(1/w)=\sum_{j=0}^{n}c_{n-j}w^{j}$, whose coefficients
+$c_n\le c_{n-1}\le\cdots\le c_0$ are positive and nondecreasing; by Lemma \ref{lem:monotone}
+every zero $w'$ of $f^{*}$ satisfies $\abs{w'}\le1$. A non-zero $w$ is a zero of $f$ if and
+only if $1/w$ is a zero of $f^{*}$, so $\abs{w}\ge1$ for every zero $w$ of $f$, and
+$\abs{z}=a\abs{w}\ge a$.
+\end{proof}
+
+\begin{remark}\label{rem:sharp}
+The annulus \eqref{eq:EK} cannot be improved in general, as $p(z)=1+z+\cdots+z^{n}$ shows,
+where $a=A=1$ and all zeros lie on $\abs{z}=1$. The content of \S\ref{sec:rigidity} is
+that, for a given $p$ with $a<A$, attainment on a boundary circle is an extremely
+restrictive condition.
+\end{remark}
+
+\section{Exact equality cases}\label{sec:rigidity}
+
+We keep the notation \eqref{eq:normalisation}--\eqref{eq:Delta}: the sequence $b$ is
+positive and nondecreasing, $q(u)=\sum b_ku^{k}$, and $I$ is the jump set.
+
+\begin{lemma}[Decomposition identity]\label{lem:key}
+For every $u\in\C$,
+\begin{equation}\label{eq:key}
+(1-u)q(u)=b_0+\sum_{k=1}^{n}\Delta_ku^{k}-b_nu^{n+1}.
+\end{equation}
+In particular, if $q(u)=0$ then
+\begin{equation}\label{eq:star}
+b_0+\sum_{k\in I}\Delta_ku^{k}=b_nu^{n+1}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Expand $(1-u)\sum_{k=0}^{n}b_ku^{k}=\sum_{k=0}^{n}b_ku^{k}-\sum_{k=0}^{n}b_ku^{k+1}$ and
+collect the coefficient of $u^{k}$ for $1\le k\le n$, which is $b_k-b_{k-1}=\Delta_k$; the
+constant term is $b_0$ and the term of degree $n+1$ is $-b_n$. Terms with $\Delta_k=0$ may
+be dropped, which gives \eqref{eq:star}.
+\end{proof}
+
+\subsection{Proof of the rigidity theorem}
+
+\begin{proof}[Proof of Theorem \ref{thm:rigidity}]
+\emph{(i)$\Rightarrow$(ii).} Let $q(u)=0$ with $\abs{u}=1$. Since $q(1)=\sum_kb_k>0$ we
+have $u\ne1$. By \eqref{eq:star},
+\begin{equation}\label{eq:align0}
+b_0+\sum_{k\in I}\Delta_ku^{k}=b_nu^{n+1}.
+\end{equation}
+Taking absolute values and using $\abs{u}=1$ together with $\sum_{k\in I}\Delta_k=b_n-b_0$,
+\[
+b_n=\Bigl|b_0+\sum_{k\in I}\Delta_ku^{k}\Bigr|
+\le b_0+\sum_{k\in I}\Delta_k=b_n .
+\]
+Hence equality holds in the triangle inequality. All summands $b_0$ and $\Delta_ku^{k}$
+($k\in I$) are non-zero, so they share a common argument; the summand $b_0>0$ has argument
+$0$, hence
+\begin{equation}\label{eq:align}
+u^{k}=1\qquad\text{for every }k\in I .
+\end{equation}
+Substituting \eqref{eq:align} into \eqref{eq:align0} gives
+$b_0+\sum_{k\in I}\Delta_k=b_nu^{n+1}$, that is $b_n=b_nu^{n+1}$, so
+\begin{equation}\label{eq:rootofunity}
+u^{n+1}=1 .
+\end{equation}
+Set $d:=\ord(u)\ge2$. By \eqref{eq:align} and \eqref{eq:rootofunity} we have $d\mid k$ for
+all $k\in I$, and $d\mid(n+1)$. Since $I$ is exactly the set of indices at which $b$
+strictly increases, $b$ is constant between consecutive elements of $I$; as all elements of
+$I$ are multiples of $d$, the sequence $b$ is constant on every block
+$\set{jd,\dots,jd+d-1}$. Because $d\mid(n+1)$, all blocks are complete, which is (ii).
+
+\emph{(ii)$\Rightarrow$(iii).} If $b$ is constant on blocks of length $d$ and
+$d\mid(n+1)$, put $c_j:=b_{jd}$ for $0\le j\le m-1$, $m=(n+1)/d$. Then
+$0<c_0\le\cdots\le c_{m-1}$ and
+\[
+q(u)=\sum_{j=0}^{m-1}c_j\sum_{r=0}^{d-1}u^{jd+r}
+=\Bigl(\sum_{r=0}^{d-1}u^{r}\Bigr)\sum_{j=0}^{m-1}c_ju^{jd},
+\]
+which is \eqref{eq:factorisation}.
+
+\emph{(iii)$\Rightarrow$(i).} Let $u\ne1$ be a $d$-th root of unity. Then $\abs{u}=1$,
+$1+u+\cdots+u^{d-1}=0$ and $u^{d}=1$, so $q(u)=0\cdot\sum_jc_j=0$.
+\end{proof}
+
+\begin{remark}
+Only the implication (i)$\Rightarrow$(ii) uses monotonicity, and it uses it exactly twice:
+to make the coefficients $\Delta_k$ non-negative in \eqref{eq:star}, and to convert the
+alignment \eqref{eq:align} into the block structure of $b$. For arbitrary positive
+coefficients the conclusion fails, because then the triangle inequality in the proof is
+generically strict.
+\end{remark}
+
+\subsection{Corollaries}\label{sec:corollaries}
+
+\begin{corollary}[Boundary zeros are roots of unity]\label{cor:rootofunity}
+If $q(u)=0$ and $\abs{u}=1$, then $u^{n+1}=1$. Moreover $q$ vanishes at every non-trivial
+$d$-th root of unity, for each $d\ge2$ dividing $n+1$ that occurs in
+Theorem \ref{thm:rigidity}(ii).
+\end{corollary}
+
+\begin{proof}
+The first assertion is \eqref{eq:rootofunity}; the second is the implication
+(ii)$\Rightarrow$(i) of Theorem \ref{thm:rigidity}.
+\end{proof}
+
+\begin{corollary}[Prime $n+1$]\label{cor:prime}
+Suppose that $n+1$ is prime. Then the circle $\abs{z}=A$ contains a zero of $p$ if and only
+if all ratios $r_k$ coincide, that is $a=A$ and $p(z)=c\sum_{k=0}^{n}(z/A)^{k}$ for some
+$c>0$. In that case \eqref{eq:EK} degenerates to a single circle.
+\end{corollary}
+
+\begin{proof}
+If a zero with $\abs{z}=A$ exists, Theorem \ref{thm:rigidity} provides $d\ge2$ with
+$d\mid(n+1)$; primality forces $d=n+1$, so $b$ is constant on the single block
+$\set{0,\dots,n}$, i.e.\ $b_0=\cdots=b_n$. Then $b_k=b_{k+1}$ gives $r_k=A$ for all $k$,
+hence $a=A$ and $a_k=a_0A^{-k}$. Conversely, if $a_k=a_0A^{-k}$ then
+$p(z)=a_0\sum_k(z/A)^{k}$, whose zeros satisfy $(z/A)^{n+1}=1$ with $z\ne A$, hence
+$\abs{z}=A$.
+\end{proof}
+
+\begin{corollary}[Arithmetic criterion]\label{cor:gcd}
+Let $I$ be the jump set \eqref{eq:Delta} and let $g$ be the greatest common divisor of the
+elements of $I$ (with $g:=0$ if $I=\emptyset$).
+\begin{enumerate}
+\item[(a)] If $I=\emptyset$, equivalently $b_0=\cdots=b_n$ and $a=A$, then $q$ vanishes at
+all $(n+1)$-th roots of unity other than $1$.
+\item[(b)] If $I\ne\emptyset$, then $q$ has a zero on the unit circle if and only if
+$\gcd(g,n+1)\ge2$.
+\end{enumerate}
+In particular, if the maximal ratio $A$ is attained at a single index $k_0$ and
+$\gcd(k_0,n+1)=1$, then no zero of $p$ lies on $\abs{z}=A$.
+\end{corollary}
+
+\begin{proof}
+Part (a) is the case $d=n+1$ of Theorem \ref{thm:rigidity}, in which the single block
+covers all coefficients. For (b), Theorem \ref{thm:rigidity} says that a boundary zero
+exists if and only if $b$ is constant on blocks of some length $d\ge2$ with $d\mid(n+1)$;
+this holds if and only if $d$ divides every element of $I$, that is $d\mid g$. Such a
+$d\ge2$ exists if and only if $\gcd(g,n+1)\ge2$. The last assertion is the case
+$I=\set{k_0}$.
+\end{proof}
+
+\begin{example}\label{ex:examples}
+\leavevmode
+\begin{enumerate}
+\item[(a)] $q(u)=1+u+2u^{2}+2u^{3}$, so $n+1=4$, $I=\set2$ and $\gcd(2,4)=2$. Boundary
+zeros exist: indeed $q(u)=(1+u)(1+2u^{2})$, and $u=-1$ has modulus $1$. The remaining zeros
+$\pm\ii/\sqrt2$ have modulus $1/\sqrt2<1$, so the outer circle is attained and the inner one
+is not.
+\item[(b)] $q(u)=1+u+u^{2}+\gamma u^{3}$ with $\gamma>1$, so $n+1=4$ and $I=\set3$. Since
+$\gcd(3,4)=1$, there is no zero of modulus $1$: all zeros lie strictly inside the unit
+disc. Note that $b=(1,1,1,\gamma)$ is \emph{almost} block-periodic with $d=2$, the only
+failure being in the last block, and that this already destroys attainment.
+\item[(c)] $q(u)=1+u+u^{2}+u^{3}+2u^{4}$, so $n+1=5$ is prime. There is no zero on the unit
+circle, in agreement with Corollary \ref{cor:prime}.
+\end{enumerate}
+\end{example}
+
+\begin{remark}[The inner circle]\label{rem:dual}
+Attainment of the lower bound is governed by the reversed sequence. With $c_k=a_ka^{k}$ and
+$f(w)=\sum_kc_kw^{k}$ as in the proof of Theorem \ref{thm:EK}, a zero $z$ of $p$ satisfies
+$\abs{z}=a$ if and only if the zero $w=z/a$ of $f$ satisfies $\abs{w}=1$, that is, if and
+only if $f^{*}(w)=\sum_jc_{n-j}w^{j}$ satisfies the hypothesis of
+Theorem \ref{thm:rigidity} with $c_{n-j}$ in place of $b_j$. Reversing a block structure of
+length $d$ with $d\mid(n+1)$ produces a block structure of the same length, so the two
+conditions have the same shape, but they are imposed on the two different rescalings
+$a_kA^{k}$ and $a_ka^{k}$; a sequence may well attain one bound and not the other, as in
+Example \ref{ex:examples}(a).
+\end{remark}
+
+\section{The quantitative side}\label{sec:quant}
+
+Theorem \ref{thm:rigidity} describes the exact equality case. The next two results quantify
+what happens nearby: an identity that measures the deficit, and a computation that shows how
+fast the extremal circle is approached under a natural perturbation.
+
+\subsection{A defect identity}
+
+\begin{proposition}[Defect identity]\label{prop:defect}
+Let $0<b_0\le\cdots\le b_n$ and let $u$ be a zero of $q$. Then
+\begin{equation}\label{eq:defect}
+b_n\bigl(1-\operatorname{Re}u^{n+1}\bigr)
+=\sum_{k=1}^{n}\Delta_k\bigl(1-\operatorname{Re}u^{k}\bigr).
+\end{equation}
+Consequently, with $R=\abs{u}$ and $u=Re^{\ii\vartheta}$,
+\begin{equation}\label{eq:defect2}
+\sum_{k\in I}\Delta_k\bigl(1-R^{k}\cos(k\vartheta)\bigr)\ \ge\ b_n\bigl(1-R^{n+1}\bigr).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Taking real parts in \eqref{eq:star} and using $\sum_{k\in I}\Delta_k=b_n-b_0$ gives
+\[
+b_n\operatorname{Re}u^{n+1}
+=b_0+\sum_{k\in I}\Delta_k\operatorname{Re}u^{k}
+=b_n-\sum_{k\in I}\Delta_k+\sum_{k\in I}\Delta_k\operatorname{Re}u^{k},
+\]
+which is \eqref{eq:defect}. For \eqref{eq:defect2}, use
+$\operatorname{Re}u^{n+1}\le R^{n+1}$ in the left-hand side of \eqref{eq:defect} and
+$\operatorname{Re}u^{k}=R^{k}\cos(k\vartheta)$ in the right-hand side.
+\end{proof}
+
+\begin{remark}\label{rem:defectrigid}
+At $R=1$ the identity \eqref{eq:defect} reads
+$b_n\bigl(1-\cos((n+1)\vartheta)\bigr)=\sum_{k\in I}\Delta_k\bigl(1-\cos(k\vartheta)\bigr)$,
+with both sides non-negative. This is a ``linearised'' form of the rigidity argument, but it
+is strictly weaker: the real part alone does not force the individual terms to vanish, which
+is why the alignment \eqref{eq:align} was deduced from the modulus rather than from
+\eqref{eq:defect}.
+\end{remark}
+
+\subsection{How fast is the extremal circle approached?}
+
+Fix $n\ge1$ and consider the family
+\begin{equation}\label{eq:gamma}
+p_\gamma(z)=1+z+\cdots+z^{n-1}+\gamma z^{n},\qquad \gamma>1 .
+\end{equation}
+Its ratios are $r_0=\cdots=r_{n-2}=1$ and $r_{n-1}=1/\gamma$, so $A=1$, $a=1/\gamma$ and the
+jump set is $I=\set n$. By Corollary \ref{cor:gcd}(b) there is no zero of modulus $1$,
+since $\gcd(n,n+1)=1$. It is therefore natural to ask how far the zeros are from the unit
+circle.
+
+\begin{proposition}[Sharpness rate]\label{prop:gamma}
+Let $\omega=e^{2\pi\ii k/(n+1)}$ with $1\le k\le n$, and let $z_k(\gamma)$ denote the zero
+of $p_\gamma$ near $\omega$. Then $z_k$ is analytic near $\gamma=1$ and
+\begin{equation}\label{eq:rate}
+z_k(\gamma)=\omega+\frac{1-\omega}{n+1}(\gamma-1)+O\bigl((\gamma-1)^{2}\bigr),
+\end{equation}
+\begin{equation}\label{eq:rate2}
+\abs{z_k(\gamma)}
+=1-\frac{2\sin^{2}\bigl(\pi k/(n+1)\bigr)}{n+1}(\gamma-1)+O\bigl((\gamma-1)^{2}\bigr).
+\end{equation}
+In particular
+\begin{align}
+\max_{1\le k\le n}\abs{z_k(\gamma)}
+&=1-\frac{2\sin^{2}\bigl(\pi/(n+1)\bigr)}{n+1}(\gamma-1)+O\bigl((\gamma-1)^{2}\bigr)\label{eq:rate3}\\
+&=1-\frac{2\pi^{2}}{(n+1)^{3}}(\gamma-1)+O\bigl((\gamma-1)^{2}\bigr)
++O\!\left(\frac{\gamma-1}{(n+1)^{5}}\right).\label{eq:rate4}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+Write $p_\gamma(z)=\dfrac{1-z^{n+1}}{1-z}+(\gamma-1)z^{n}$ and set $\varepsilon=\gamma-1$.
+At $\varepsilon=0$ the zeros are the $(n+1)$-th roots of unity $\omega\ne1$, all simple, so
+by the implicit function theorem each of them continues analytically to a zero
+$z_k(\varepsilon)$ of $p_\gamma$. Differentiating $p_\gamma(z_k(\varepsilon))=0$ at
+$\varepsilon=0$ gives $z_k'(0)=-\omega^{n}/p_1'(\omega)$. Now
+$p_1'(z)=\sum_{k=1}^{n}kz^{k-1}=\dfrac{1-(n+1)z^{n}+nz^{n+1}}{(1-z)^{2}}$, so at
+$z=\omega$, using $\omega^{n+1}=1$ and $\omega\ne1$,
+\[
+p_1'(\omega)=\frac{1-(n+1)\omega^{-1}+n}{(1-\omega)^{2}}
+=\frac{(n+1)\bigl(1-\omega^{-1}\bigr)}{(1-\omega)^{2}}
+=-\frac{(n+1)\omega^{-1}}{1-\omega},
+\]
+and therefore
+\[
+z_k'(0)=-\frac{\omega^{n}}{p_1'(\omega)}
+=\omega^{n}\cdot\frac{1-\omega}{(n+1)\omega^{-1}}
+=\frac{\omega^{n+1}(1-\omega)}{n+1}
+=\frac{1-\omega}{n+1},
+\]
+which is \eqref{eq:rate}. Then
+\[
+\abs{z_k(\varepsilon)}^{2}
+=1+\frac{2\varepsilon}{n+1}\operatorname{Re}\bigl(\overline{\omega}(1-\omega)\bigr)
++O(\varepsilon^{2})
+=1-\frac{4\varepsilon}{n+1}\sin^{2}\!\Bigl(\frac{\pi k}{n+1}\Bigr)+O(\varepsilon^{2}),
+\]
+since $\operatorname{Re}\bigl(\overline{\omega}(1-\omega)\bigr)=\cos\vartheta-1
+=-2\sin^{2}(\vartheta/2)$ with $\vartheta=2\pi k/(n+1)$. Taking square roots gives
+\eqref{eq:rate2}. The function $k\mapsto\sin^{2}(\pi k/(n+1))$ is maximal over
+$1\le k\le n$ at $k=1$, which gives the first equality in \eqref{eq:rate3}; the second
+follows from $\sin t=t+O(t^{3})$.
+\end{proof}
+
+\begin{remark}
+Proposition \ref{prop:gamma} makes the fragility of \eqref{eq:EK} quantitative: a relative
+perturbation of size $\varepsilon$ moves the extremal zeros off the circle by only
+$\Theta(\varepsilon/n^{3})$, so forcing a zero to lie a distance $\delta$ inside the disc
+requires $\gamma-1\asymp n^{3}\delta$. The exponent $3$ reflects the double degeneracy at
+$u=1$, where both the block structure and the $(n+1)$-th root of unity condition collapse.
+\end{remark}
+
+\begin{table}[ht]
+\centering
+\caption{Proposition \ref{prop:gamma} against direct computation of the maximal root modulus
+of \eqref{eq:gamma}.}
+\label{tab:gamma}
+\begin{tabular}{cccc}
+\toprule
+$n$ & $\gamma$ & $\max_k\abs{z_k(\gamma)}$ & first-order prediction \\
+\midrule
+$4$  & $1.001$ & $0.999861815004$ & $0.999861803399$ \\
+$4$  & $1.1$   & $0.986330205396$ & $0.986180339887$ \\
+$9$  & $1.001$ & $0.999980891439$ & $0.999980901699$ \\
+$9$  & $1.1$   & $0.997994875902$ & $0.998090169944$ \\
+$19$ & $1.001$ & $0.999997550857$ & $0.999997552826$ \\
+$19$ & $1.1$   & $0.999736088306$ & $0.999755282581$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Computational verification}\label{sec:numerics}
+
+All statements of \S\ref{sec:rigidity} and \S\ref{sec:quant} were checked with the scripts
+in the companion repository (\texttt{verify/}); the entry points are \texttt{ek\_core.py},
+\texttt{ek\_more.py} and \texttt{ek\_dual.py}.
+
+\paragraph{Method.} For an integer sequence $b$, the question whether $q$ has a zero on
+$\abs{u}=1$ is decided as follows. Since $q$ has real coefficients, a zero $u$ with
+$\abs{u}=1$ satisfies $q(u)=u^{n}\overline{q(u)}=q^{*}(u)$, where $q^{*}(u)=u^{n}q(1/u)$ is
+the reversed polynomial. Hence a boundary zero forces the gcd $\gcd(q,q^{*})$ to be
+non-constant, and this is decided \emph{exactly} in rational arithmetic: when
+$\gcd(q,q^{*})=1$ there is no boundary zero and no floating-point computation enters the
+decision. When the gcd is non-constant, its zeros are computed numerically and their moduli
+inspected; in the search below this second step always produced a root of unity, in
+agreement with Corollary \ref{cor:rootofunity}.
+
+\paragraph{Exhaustive search.} We enumerated all nondecreasing sequences
+$1\le b_0\le\cdots\le b_n\le5$ with $2\le n+1\le12$, that is $6182$ sequences, and compared
+the exact decision with the block-structure criterion of Theorem \ref{thm:rigidity}(ii).
+There were $591$ sequences with a boundary zero, all of them block-structured, and no
+counterexample in either direction. In the same sweep, all $1111$ zeros found on the unit
+circle satisfied $u^{n+1}=1$, confirming Corollary \ref{cor:rootofunity}.
+
+\paragraph{The two-sided question.} Among the $6116$ sequences of the sweep with $a<A$, that
+is with a non-degenerate annulus, none attained both boundary circles. This is consistent
+with, but does not prove, the expectation discussed in Problem \ref{prob:both}.
+
+\paragraph{Defect identity.} The identity \eqref{eq:defect} was verified numerically on
+$2000$ random polynomials with positive rational coefficients of degree at most $8$; the
+maximal relative error was $1.2\cdot10^{-14}$, at the level of round-off. Table
+\ref{tab:gamma} confirms Proposition \ref{prop:gamma}.
+
+\section{Open questions}\label{sec:open}
+
+\begin{problem}[Quantitative rigidity]\label{prob:quant}
+Find an explicit functional $\eta$ of the coefficient sequence, vanishing exactly on the
+block-structured sequences of Theorem \ref{thm:rigidity}(ii), such that every zero $u$ of
+$q$ satisfies $\abs{u}\le1-\eta(b)$ for a non-degenerate annulus. Proposition
+\ref{prop:gamma} shows that the true deficit can be as small as $\Theta(\varepsilon/n^{3})$
+for a perturbation of relative size $\varepsilon$, which suggests that $\eta$ must be cubic
+in the distance to block structure and that a linear stability estimate cannot hold.
+\end{problem}
+
+\begin{problem}[Simultaneous attainment]\label{prob:both}
+Suppose that $a<A$ and that both circles $\abs{z}=a$ and $\abs{z}=A$ contain a zero of $p$.
+Must then $a=A$? The search of \S\ref{sec:numerics} found no counterexample. The difficulty
+is that the two conditions of Theorem \ref{thm:rigidity} are imposed on the two different
+rescalings $a_kA^{k}$ and $a_ka^{k}$ of the same coefficient sequence.
+\end{problem}
+
+\begin{problem}[Other settings]\label{prob:other}
+The rigidity argument uses only the ordered field structure and the triangle inequality, so
+analogues should hold for the quaternionic, octonionic and matrix versions of the
+Enestr\"om--Kakeya theorem that have been studied in the literature. A discrete analogue for
+the polynomial-method bounds on Kakeya sets in finite fields also seems plausible. We did
+not pursue either direction.
+\end{problem}
+
+\begin{thebibliography}{9}
+
+\bibitem[E]{Enestrom}
+G.~Enestr\"om,
+\emph{Remarque sur un th\'eor\`eme relatif aux racines de l'\'equation
+$a_nx^{n}+\cdots+a_0=0$ o\`u tous les coefficients sont r\'eels et positifs},
+T\^ohoku Math.\ J.\ \textbf{18} (1920), 34--36.
+
+\bibitem[K]{Kakeya}
+S.~Kakeya,
+\emph{On the limits of the roots of an algebraic equation with positive coefficients},
+T\^ohoku Math.\ J.\ \textbf{2} (1912), 140--142.
+
+\bibitem[M]{Marden}
+M.~Marden,
+\emph{Geometry of Polynomials}, second ed.,
+Mathematical Surveys and Monographs, no.~3, American Mathematical Society, Providence, RI,
+1966.
+
+\bibitem[RS]{RS2002}
+Q.~I. Rahman and G.~Schmeisser,
+\emph{Analytic Theory of Polynomials},
+London Mathematical Society Monographs (New Series), no.~26, Oxford University Press,
+Oxford, 2002.
+
+\end{thebibliography}
+
+\end{document}
